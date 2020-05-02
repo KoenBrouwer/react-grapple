@@ -9,7 +9,7 @@ Installation into your project is done with the [`npm install` command](https://
 
 # Install
 ```sh
-npm install --save @koenbrouwer/react-usetoggle
+npm install --save react-grapple
 ```
 
 # Usage
