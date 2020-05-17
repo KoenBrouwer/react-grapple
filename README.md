@@ -84,11 +84,42 @@ Because we've passed `true` as the second argument of the `useConditionalByTime`
 
 Handling change events on input fields is always a tedious process. Not with the `useInput` hook and easy binding.
 
+There's two ways of initializing the useInput hook. First way is to give it one argument of type `string`, which represents the default value of the input field. The input field that gets rendered will be prepopulated with this defaultValue.
+
 ```jsx
 const field = useInput(initialValue); // initial value is always a string.
 ```
 
-For now only text inputs are supported. Checkboxes, radios, selects and more might be added in a future version, once I feel like I need them. Or open a [pull request](https://github.com/KoenBrouwer/react-grapple/pulls) if you have a solution.
+You can also pass an object of options as an argument to `useInput()` that implements the `UseInputOptions` interface. This way, you can add validations rules to your field. Here's an example:
+
+```jsx
+const field = useInput({
+	defaultValue: "",
+	validate: [Validators.required, Validators.password, Validators.mail]
+});
+```
+
+There's currently some built-in validators, available from the `Validators` object:
+
+1. `Validators.required`: the field cannot be left empty or filled with spaces.
+2. `Validators.email`: tests the field value agains a Regex pattern for email addresses.
+3. `Validators.password`: requires the field value to:
+	- Contain at least 8 characters
+	- Contain at least one uppercase letter (A-Z)
+	- Contain at least one lowercase letter (a-z)
+	- Contain at least one number (0-9)
+	- Contain at least one number that is none of the above (special characters)
+
+You can also add your own validator function that returns true or false:
+	
+```jsx
+const field = useInput({
+	validate: [Validators.required, (value: string) => value === "whatever"]
+});
+```
+
+> ℹ️ For now only text inputs are supported. Checkboxes, radios, selects and more might be added in a future version, once I feel like I need them. If you wish to add them to the library yourself, feel free to open a [pull request](https://github.com/KoenBrouwer/react-grapple/pulls) if you have a solution.
+
 Anyway, just define the fields for your form like this:
 
 ```jsx
@@ -112,8 +143,9 @@ You can reference the value of the input like this:
 name.value // returns the value for this field
 ```
     
-Some other useful methods you can call on the result of `useInput()`:
+Some other useful properties and methods you can call on the result of `useInput()`:
 
+- `isValid` will be true if all validation rules return true. Updates automatically using `onChange`.
 - `clear()` sets the value of the field to `""`.
 - `setValue()` sets the value of the field to whatever you pass to it, if you ever need to set the value manually.
 
