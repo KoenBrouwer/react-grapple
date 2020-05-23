@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/KoenBrouwer/react-grapple#readme",
   "devDependencies": {
-    "@types/react": "^16.9.34",
-    "typescript": "^3.8.3"
+    "@types/react": "^16.9.35",
+    "typescript": "^3.9.3"
   },
   "dependencies": {
     "react": "^16.13.1"
