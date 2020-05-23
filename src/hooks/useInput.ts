@@ -1,4 +1,4 @@
-import {BaseSyntheticEvent, Dispatch, SetStateAction, useCallback, useMemo, useState} from "react";
+import {BaseSyntheticEvent, createRef, Dispatch, RefObject, SetStateAction, useCallback, useMemo, useState} from "react";
 
 const emailRegexPattern = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([A-Za-z]{2,}(?:\\.[A-Za-z]{2,})?)$";
 
@@ -25,6 +25,7 @@ export type UseInput = {
 	setValue: Dispatch<SetStateAction<string>>,
 	onChange: OnChangeHandler,
 	isValid: boolean,
+	ref: RefObject<HTMLInputElement>
 	bind: {
 		defaultValue?: string,
 		onChange: OnChangeHandler,
@@ -78,7 +79,8 @@ export function useInput(options?: UseInputArgs): UseInput {
 		let isValid;
 		if (!validate || validate.length === 0) {
 			isValid = true;
-		} else {
+		}
+		else {
 			isValid = validate.every(v => v(value));
 		}
 
@@ -86,6 +88,7 @@ export function useInput(options?: UseInputArgs): UseInput {
 	};
 
 	const clear = useCallback(() => setValue(defaultValue), []);
+	const ref = createRef<HTMLInputElement>();
 
 	return useMemo(() => ({
 		defaultValue,
@@ -94,10 +97,12 @@ export function useInput(options?: UseInputArgs): UseInput {
 		setValue,
 		onChange,
 		isValid: isValid(),
+		ref,
 
 		bind: {
 			onChange,
 			value,
+			ref,
 		},
 	}), [defaultValue, value, clear, isValid]);
 }
@@ -105,5 +110,5 @@ export function useInput(options?: UseInputArgs): UseInput {
 export default useInput;
 
 export {
-	Validators
-}
+	Validators,
+};
