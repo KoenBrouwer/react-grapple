@@ -132,8 +132,8 @@ And then bind the value and change handler to your input element like this:
 
 ```html
 <input type="text" {...name.bind} /> -> <input type="text" value={name.value} onChange={name.onChange} ref={name.ref} />
-<input type="text" {...city.bind} value={city.value} onChange={city.onChange} ref={city.ref} />
-<input type="text" {...country.bind} value={country.value} onChange={country.onChange} ref={country.ref} />
+<input type="text" {...city.bind} /> -> <input type="text" value={city.value} onChange={city.onChange} ref={city.ref} />
+<input type="text" {...country.bind} /> -> <input type="text" value={country.value} onChange={country.onChange} ref={country.ref} />
 ```
 
 On an `<input>`, `bind` will just pass a `value` and `onChange` to the input, and will handle changes for you. The `useInput` hook will also create a reference to every input field that is accessible via the `ref` property.
