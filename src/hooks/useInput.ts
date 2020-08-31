@@ -46,6 +46,7 @@ export type UseInput<T = string> = {
 type ValidationFunction<T = string> = (value: T) => boolean;
 
 export interface UseInputOptions<T = string> {
+    placeholder?: string,
     defaultValue?: T,
     validate?: ValidationFunction<T>[],
     bind?: any
@@ -72,7 +73,7 @@ export function useInput<T = string>(options?: T | UseInputOptions): UseInput<T>
         _options = {...options};
     }
 
-    const {validate, defaultValue = ""} = _options;
+    const {validate, defaultValue = "", placeholder} = _options;
 
     const [value, setValue] = useState<T>(defaultValue);
     let callback: CallableFunction | undefined = undefined;
@@ -111,7 +112,7 @@ export function useInput<T = string>(options?: T | UseInputOptions): UseInput<T>
         ref,
 
         bind: {
-
+            placeholder,
             onChange,
             value,
             ref,
