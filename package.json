@@ -15,9 +15,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build",
-    "preversion": "git add -A",
-    "postversion": "git push && git push --tags"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
