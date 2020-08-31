@@ -1,34 +1,46 @@
 import useInput, {UseInput, UseInputOptions} from "./useInput";
 
-export type UseNumberInputArgs = (number | UseInputOptions<number>) & {
-    min?: number,
-    max?: number,
-    step?: number,
-    defaultValue?: number,
+export type UseNumberInputArgs = UseInputOptions<number> & {
+	min?: number,
+	max?: number,
+	step?: number,
+	defaultValue?: number,
 };
 
 type UseNumberInput = UseInput<number> & {
-    bind: UseInput<number>["bind"] & {
-        min?: number,
-        max?: number,
-        step?: number,
-    }
+	bind: UseInput<number>["bind"] & {
+		min?: number,
+		max?: number,
+		step?: number,
+	}
 };
 
-const useNumberInput = (options: UseNumberInputArgs = {}): UseNumberInput => {
-    const {min, max, step} = options;
-    const numberInput = useInput<number>(options as any); // Todo: fix this any
+const useNumberInput = (options?: number | UseNumberInputArgs): UseNumberInput => {
+	let _options: UseNumberInputArgs = {};
 
-    console.log(numberInput.bind);
+	if (typeof options === "number") {
+		_options = {
+			defaultValue: options
+		};
+	} else if (!options) {
+		_options = {};
+	} else {
+		_options = options;
+	}
 
-    return {
-        ...numberInput,
-        bind: {
-            ...numberInput.bind,
-            min, max, step,
-            type: "number"
-        }
-    };
+	const {min, max, step, ...rest} = _options;
+	const numberInput = useInput<number>(rest as UseInputOptions);
+
+	return {
+		...numberInput,
+		bind: {
+			...numberInput.bind,
+			type: "number",
+			min,
+			max,
+			step,
+		}
+	};
 }
 
 export default useNumberInput;

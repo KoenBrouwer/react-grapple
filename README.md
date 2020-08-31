@@ -158,6 +158,32 @@ Some other useful properties and methods you can call on the result of `useInput
 - `clear()` sets the value of the field to `""`.
 - `setValue()` sets the value of the field to whatever you pass to it, if you ever need to set the value manually.
 
+### useNumberInput
+
+This is basically an extension to `useInput`, but `bind` contains a couple more fields: `min`, `max`, `step` and `type="number"`. 
+
+```jsx
+const nOrders = useNumberInput(1); // default value 1
+```
+
+You can also configure them in the `options` instead of passing a default value:
+
+```jsx
+const nOrders = useNumberInput({
+	defaultValue: 1,
+	max: 10,
+	min: 2,
+	step: 0.1
+});
+```
+
+And then bind to an input as usual:
+
+```jsx
+<input {...nOrders.bind} />
+```
+
+
 # Author
 
 👤 **Koen Brouwer**
