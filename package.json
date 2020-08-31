@@ -1,6 +1,6 @@
 {
   "name": "react-grapple",
-  "version": "1.3.0-beta.0",
+  "version": "1.3.0-beta.1",
   "description": "A collection of useful hooks that I made.",
   "author": "Koen Brouwer",
   "keywords": [
@@ -15,7 +15,9 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "publish:next": "npm publish --tag=next",
+    "publish:latest": "npm publish"
   },
   "repository": {
     "type": "git",
