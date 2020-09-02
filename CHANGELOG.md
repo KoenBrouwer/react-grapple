@@ -9,6 +9,13 @@ Installation into your project is done with the [`npm install` command](https://
 
 # Changelog
 
+### 1.3.0
+- Added `placeholder` to options and `bind` for `useInput`.
+- Added useNumberInput hook for `input[type=number]` with `min`, `max` and `step` options.
+- Added test for useToggle hook.
+- Added test for useConditionalByTime hook (and actually made some changes because the tests failed 😊)
+- Added tests for useInput, useNumberInput, Conditional and testing if all the exports are there.
+
 ### 1.2.0
 Starting the changelog from now.
 
