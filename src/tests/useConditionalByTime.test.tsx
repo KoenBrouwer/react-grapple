@@ -1,5 +1,5 @@
 import {act, renderHook} from '@testing-library/react-hooks'
-import useConditionalByTime from "./useConditionalByTime";
+import useConditionalByTime from "../hooks/useConditionalByTime";
 import React from 'react';
 import {configure, shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";

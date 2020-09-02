@@ -9,11 +9,11 @@ import {
     useState
 } from "react";
 
-const emailRegexPattern = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([A-Za-z]{2,}(?:\\.[A-Za-z]{2,})?)$";
+const emailRegexPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([A-Za-z]{2,}(?:\.[A-Za-z]{2,})?)$/i;
 
 const Validators = {
     required: (value: string) => value.trim().length > 0,
-    email: (value: string) => new RegExp(emailRegexPattern).test(value),
+    email: (value: string) => (new RegExp(emailRegexPattern)).test(value),
     password: (value: string) => {
         const validations = [
             new RegExp(/([a-z])+/g).test(value),
@@ -39,7 +39,8 @@ export type UseInput<T = string> = {
         onChange: OnChangeHandler,
         defaultValue?: T,
         value?: T,
-        type?: string
+        type?: string,
+        placeholder?: string,
     },
 };
 
@@ -76,16 +77,10 @@ export function useInput<T = string>(options?: T | UseInputOptions): UseInput<T>
     const {validate, defaultValue = "", placeholder} = _options;
 
     const [value, setValue] = useState<T>(defaultValue);
-    let callback: CallableFunction | undefined = undefined;
 
     const onChange = (e: BaseSyntheticEvent) => {
         e.persist();
-        let newValue = e.target.value;
-
-        setValue(() => newValue);
-        if (callback) {
-            callback(newValue);
-        }
+        setValue(() => e.target.value);
     };
 
     const isValid = () => {

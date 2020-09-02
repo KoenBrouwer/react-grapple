@@ -2,7 +2,7 @@ import React from "react";
 
 interface IConditionalProps {
 	children: any,
-	show: boolean
+	show?: boolean
 }
 
 export const Conditional = ({children, show = true}: IConditionalProps) => {
