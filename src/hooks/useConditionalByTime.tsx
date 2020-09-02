@@ -9,22 +9,27 @@ export function useConditionalByTime(splitTime: Date, realtime = false): UseCond
 	const [isDone, toggleDone] = useToggle(_isDone());
 
 	useEffect(() => {
-		let interval;
 		/* If realtime is true, we need to refresh the component and show the After */
 		if (realtime && !isDone) {
-			interval = setInterval(() => {
+			let interval;
+			let checkDone = () => {
 				if (_isDone()) {
 					clearInterval(interval);
-					toggleDone();
+					toggleDone(true);
 				}
-			}, 1000);
+			};
+			interval = setInterval(checkDone, 1000);
+			checkDone();
+			return () => clearInterval(interval);
 		}
-
-		return () => clearInterval(interval);
 	}, [splitTime, realtime]);
 
-	const Before: React.FC = useMemo(() => ({children}) => <Conditional show={new Date() < splitTime}>{children}</Conditional>, [splitTime]);
-	const After: React.FC = useMemo(() => ({children}) => <Conditional show={new Date() >= splitTime}>{children}</Conditional>, [splitTime]);
+	const Before: React.FC = useMemo(() => ({children}) => (
+		<Conditional show={!isDone}>{children}</Conditional>
+	), [splitTime, isDone]);
+	const After: React.FC = useMemo(() => ({children}) => (
+		<Conditional show={isDone}>{children}</Conditional>
+	), [splitTime, isDone]);
 
 	return [Before, After];
 }
