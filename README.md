@@ -5,7 +5,7 @@
 [![Version](https://img.shields.io/npm/v/react-grapple.svg)](https://www.npmjs.com/package/react-grapple)
 
 A collection of useful hooks that I made. This is a [Node.js](https://nodejs.org/en/) package available through the [npm registry](https://nodejs.org/en/).
-Installation into your project is done with the [`npm install` command](https://docs.npmjs.com/downloading-and-installing-packages-locally). 
+You can install `react-grapple` with the [`npm install` command](https://docs.npmjs.com/downloading-and-installing-packages-locally). 
 
 # Install
 ```sh
@@ -26,7 +26,7 @@ const [state, toggleState] = useToggle(true); // defaults to true
 ```
     
 If you don't give it a default value, it will default to `false`, or the boolean you feed it.
-And then`toggleState()` will toggle the value from `true` to `false`, or `false` to `true`.
+Then, `toggleState()` will toggle the value from `true` to `false`, or `false` to `true`.
 
 ### useConditionalByTime
 
@@ -84,7 +84,7 @@ Because we've passed `true` as the second argument of the `useConditionalByTime`
 
 Handling change events on input fields is always a tedious process. Not with the `useInput` hook and easy binding.
 
-There's two ways of initializing the useInput hook. First way is to give it one argument of type `string`, which represents the default value of the input field. The input field that gets rendered will be prepopulated with this defaultValue.
+There are two ways of initializing the useInput hook. First way is to give it one argument of type `string`, which represents the default value of the input field. The input field that gets rendered will be prepopulated with this defaultValue.
 
 ```jsx
 const field = useInput(initialValue); // initial value is always a string.
@@ -101,9 +101,9 @@ const field = useInput({
 
 There's currently some built-in validators, available from the `Validators` object:
 
-1. `Validators.required`: the field cannot be left empty or filled with spaces.
-2. `Validators.email`: tests the field value agains a Regex pattern for email addresses.
-3. `Validators.password`: requires the field value to:
+1. `Validators.required` - the field cannot be left empty or filled with spaces.
+2. `Validators.email` - tests the field value agains a Regex pattern for email addresses.
+3. `Validators.password` - requires the field value to:
 	- Contain at least 8 characters
 	- Contain at least one uppercase letter (A-Z)
 	- Contain at least one lowercase letter (a-z)
@@ -118,7 +118,7 @@ const field = useInput({
 });
 ```
 
-> ℹ️ For now only text inputs are supported. Checkboxes, radios, selects and more might be added in a future version, once I feel like I need them. If you wish to add them to the library yourself, feel free to open a [pull request](https://github.com/KoenBrouwer/react-grapple/pulls) if you have a solution.
+> ℹ️ For now, useInput only supports text inputs. I might add checkboxes, radios and selects in a future version, once I feel like I need them. If you wish to add them to the library yourself, feel free to open a [pull request](https://github.com/KoenBrouwer/react-grapple/pulls) if you have a solution.
 
 Anyway, just define the fields for your form like this:
 
@@ -128,7 +128,7 @@ const city = useInput("");
 const country = useInput("Netherlands");
 ```
 
-And then bind the value and change handler to your input element like this:
+Then bind the value and change handler to your input element like this:
 
 ```html
 <input type="text" {...name.bind} /> -> <input type="text" value={name.value} onChange={name.onChange} ref={name.ref} />
@@ -177,12 +177,29 @@ const nOrders = useNumberInput({
 });
 ```
 
-And then bind to an input as usual:
+Then bind to an input as usual:
 
 ```jsx
 <input {...nOrders.bind} />
 ```
 
+### useIsMobile
+
+This hook uses window.innerWidth to detect if the current viewport is "mobile" or not. 
+It has a default breakpoint of 650px. You can also pass a custom breakpoint as the only argument.
+When the window resizes, `isMobile` updates. 
+
+```jsx
+const isMobile = useIsMobile(); // return true if window.innerWidth < 650
+```
+
+```jsx
+const isMobile = useIsMobile(450); // return true if window.innerWidth < 450
+```
+
+### useIsMobileOnce
+
+Same as `useIsMobile`, execpt that `isMobile` it doesn't update when the window resizes.
 
 # Author
 
