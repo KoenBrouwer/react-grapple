@@ -9,6 +9,10 @@ Installation into your project is done with the [`npm install` command](https://
 
 # Changelog
 
+### 1.4.0
+- Added `useIsMobile` hook for checking the width of the window (using `window.innerWidth`)
+- Added `useIsMobileOnce' hook that does the same, but doesn't update when the window resizes.
+
 ### 1.3.0
 - Added `placeholder` to options and `bind` for `useInput`.
 - Added useNumberInput hook for `input[type=number]` with `min`, `max` and `step` options.
