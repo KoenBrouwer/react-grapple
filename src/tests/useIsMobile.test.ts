@@ -3,7 +3,8 @@
  */
 
 import {act, renderHook} from '@testing-library/react-hooks'
-import useIsMobile, {useIsMobileOnce} from "../hooks/useIsMobile";
+import useIsMobile from "../hooks/useIsMobile";
+import useIsMobileOnce from "../hooks/useIsMobileOnce";
 
 interface Window {
 	innerWidth: number

@@ -11,4 +11,13 @@ test("exports all the correct things", () => {
 	expect(Grapple).toHaveProperty("Conditional");
 	expect(Grapple).toHaveProperty("Validators");
 
+	expect(Grapple.useInput).toBeInstanceOf(Function)
+	expect(Grapple.useNumberInput).toBeInstanceOf(Function)
+	expect(Grapple.useToggle).toBeInstanceOf(Function)
+	expect(Grapple.useConditionalByTime).toBeInstanceOf(Function)
+	expect(Grapple.useIsMobile).toBeInstanceOf(Function)
+	expect(Grapple.useIsMobileOnce).toBeInstanceOf(Function)
+	expect(Grapple.Conditional).toBeInstanceOf(Function)
+	expect(Grapple.Validators).toBeTruthy();
+
 });

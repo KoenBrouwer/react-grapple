@@ -3,7 +3,8 @@ import useConditionalByTime from "./hooks/useConditionalByTime";
 import Conditional from "./Conditional";
 import useInput, {Validators} from "./hooks/useInput";
 import useNumberInput from "./hooks/useNumberInput";
-import useIsMobile, { useIsMobileOnce } from "./hooks/useIsMobile";
+import useIsMobile from "./hooks/useIsMobile";
+import useIsMobileOnce from "./hooks/useIsMobileOnce";
 
 export {
 	useInput,
