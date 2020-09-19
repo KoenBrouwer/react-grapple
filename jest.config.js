@@ -4,8 +4,9 @@ module.exports = {
 	verbose: true,
 	collectCoverage: true,
 	collectCoverageFrom: [
-		"src/**/*.{js,jsx,ts,tsx}",
-		"!**/node_modules/**"
+		"src/**/*.{ts,tsx}",
+		"!**/node_modules/**",
+		"!dist/**"
 	],
 	coverageReporters: ["html"]
 };

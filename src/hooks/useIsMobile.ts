@@ -1,21 +1,17 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
+import useEventListener from "./useEventListener";
 
 export const DEFAULT_BREAKPOINT = 650;
 
-const useIsMobile = (breakpoint: number = DEFAULT_BREAKPOINT): boolean => {
-	const _isMobile = () => window.innerWidth < breakpoint;
-	const [isMobile, setIsMobile] = useState(_isMobile());
+export const useIsMobile = (breakpoint: number = DEFAULT_BREAKPOINT): boolean => {
+	const isMobileFn = () => window.innerWidth < breakpoint;
+	const [isMobile, setIsMobile] = useState<boolean>(isMobileFn());
 
-	window.onresize = () => setIsMobile(_isMobile());
-
-	useEffect(() => {
-		return () => {
-			window.onresize = null;
-		}
-	}, [])
+	useEventListener("resize", () => {
+		setIsMobile(isMobileFn());
+	});
 
 	return isMobile;
 };
-
 
 export default useIsMobile;
