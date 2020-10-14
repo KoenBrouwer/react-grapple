@@ -29,7 +29,7 @@ const useNumberInput = (options?: number | UseNumberInputArgs): UseNumberInput =
 	}
 
 	const {min, max, step, ...rest} = _options;
-	const numberInput = useInput<number>(rest as UseInputOptions);
+	const numberInput = useInput<number>(rest as UseInputOptions<number>);
 
 	return {
 		...numberInput,

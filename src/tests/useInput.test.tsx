@@ -16,6 +16,7 @@ describe("testing the hook...", () => {
 		expect(hook.isValid).toBe(true);
 		expect(hook.defaultValue).toBe("");
 		expect(hook.defaultValue).toEqual(hook.value);
+		expect(hook.dirty).toEqual(false);
 		expect(hook.bind).toHaveProperty("onChange");
 		expect(hook.bind).toHaveProperty("value");
 		expect(hook.bind).not.toHaveProperty("type");
@@ -30,6 +31,7 @@ describe("testing the hook...", () => {
 		expect(hook.isValid).toBe(true);
 		expect(hook.defaultValue).toBe(defaultValue);
 		expect(hook.defaultValue).toEqual(hook.value);
+		expect(hook.dirty).toEqual(false);
 		expect(hook.bind).toHaveProperty("onChange");
 		expect(hook.bind).toHaveProperty("value");
 		expect(hook.bind).not.toHaveProperty("type");
@@ -73,7 +75,7 @@ describe("testing the hook...", () => {
 		expect(hook.value).toEqual(newValue);
 	});
 
-	test("should reset value back to defalutValue when clear() gets called", () => {
+	test("should reset value back to defalutValue when reset() gets called", () => {
 		const defaultValue = "foo";
 		const newValue = "bar";
 
@@ -101,7 +103,7 @@ describe("testing the hook...", () => {
 
 		/* Run clear */
 		act(() => {
-			hook.clear();
+			hook.reset();
 		})
 
 		hook = result.current;
@@ -201,7 +203,54 @@ describe("testing the hook...", () => {
 
 		hook = result.current;
 		expect(hook.value).toEqual("bar")
+	});
+
+	test("dirty should be false when using defaultValue", () => {
+		const {result} = renderHook(() => useInput("foo"));
+
+		let hook = result.current;
+		expect(hook.dirty).toEqual(false);
 	})
+
+	test("after using setValue, dirty should be true", () => {
+		const {result} = renderHook(() => useInput());
+
+		let hook = result.current;
+		expect(hook.value).toEqual("");
+		expect(hook.dirty).toEqual(false);
+
+		act(() => {
+			hook.setValue("bar")
+		});
+
+		hook = result.current;
+		expect(hook.value).toEqual("bar")
+		expect(hook.dirty).toEqual(true);
+	});
+
+	test("after using reset, dirty should be false", () => {
+		const {result} = renderHook(() => useInput());
+
+		let hook = result.current;
+		expect(hook.value).toEqual("");
+		expect(hook.dirty).toEqual(false);
+
+		act(() => {
+			hook.setValue("bar")
+		});
+
+		hook = result.current;
+		expect(hook.value).toEqual("bar")
+		expect(hook.dirty).toEqual(true);
+
+		act(() => {
+			hook.reset();
+		});
+
+		hook = result.current;
+		expect(hook.value).toEqual("")
+		expect(hook.dirty).toEqual(false);
+	});
 
 });
 
