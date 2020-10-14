@@ -8,6 +8,7 @@ import {
     useMemo,
     useState
 } from "react";
+import useToggle from "./useToggle";
 
 const emailRegexPattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([A-Za-z]{2,}(?:\.[A-Za-z]{2,})?)$/i;
 
@@ -30,10 +31,13 @@ export type OnChangeHandler = (e: BaseSyntheticEvent) => void;
 export type UseInput<T = string> = {
     defaultValue: T,
     value: T,
+    reset: () => void,
+    /** @deprecated Use reset() instead. */
     clear: () => void,
     setValue: Dispatch<SetStateAction<T>>,
     onChange: OnChangeHandler,
     isValid: boolean,
+    dirty: boolean,
     ref: RefObject<HTMLInputElement>
     bind: {
         onChange: OnChangeHandler,
@@ -57,7 +61,11 @@ const defaultOptions: UseInputOptions = {
     validate: [() => true],
 };
 
-export function useInput<T = string>(options?: T | UseInputOptions): UseInput<T> {
+interface SetValueOptions {
+    triggerDirty?: boolean
+}
+
+export function useInput<T = string>(options?: T | UseInputOptions<T>): UseInput<T> {
     let _options;
 
     // Use default options if no options were given
@@ -76,14 +84,23 @@ export function useInput<T = string>(options?: T | UseInputOptions): UseInput<T>
 
     const {validate, defaultValue = "", placeholder} = _options;
 
-    const [value, setValue] = useState<T>(defaultValue);
+    const [value, _setValue] = useState<T>(defaultValue);
+    const [dirty, toggleDirty] = useToggle(false);
 
-    const onChange = (e: BaseSyntheticEvent) => {
+    const setValue = useCallback((newValue: SetStateAction<T>, {triggerDirty = true}: SetValueOptions = {}) => {
+        _setValue(newValue);
+        if (triggerDirty) {
+            toggleDirty(true);
+        }
+    }, [toggleDirty]);
+
+    const onChange = useCallback((e: BaseSyntheticEvent) => {
         e.persist();
+        toggleDirty(true);
         setValue(() => e.target.value);
-    };
+    }, [toggleDirty, setValue]);
 
-    const isValid = () => {
+    const isValid = useCallback(() => {
         let isValid;
         if (!validate || validate.length === 0) {
             isValid = true;
@@ -92,18 +109,26 @@ export function useInput<T = string>(options?: T | UseInputOptions): UseInput<T>
         }
 
         return isValid;
-    };
+    }, [validate, value]);
 
-    const clear = useCallback(() => setValue(defaultValue), []);
+    const reset = useCallback(() => {
+        setValue(defaultValue, { triggerDirty: false });
+        toggleDirty(false);
+    }, [defaultValue, toggleDirty, setValue]);
     const ref = createRef<HTMLInputElement>();
 
     return useMemo(() => ({
         defaultValue,
         value,
-        clear,
+        clear: (...args) => {
+            console.warn("react-grapple", "UseInput.clear() is deprecated. Use reset() instead.")
+            reset(...args);
+        },
+        reset,
         setValue,
         onChange,
         isValid: isValid(),
+        dirty,
         ref,
 
         bind: {
@@ -112,7 +137,7 @@ export function useInput<T = string>(options?: T | UseInputOptions): UseInput<T>
             value,
             ref,
         },
-    }), [defaultValue, value, clear, isValid]);
+    }), [defaultValue, value, reset, dirty, isValid, placeholder, ref, onChange, setValue]);
 }
 
 export default useInput;

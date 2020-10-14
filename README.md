@@ -155,8 +155,11 @@ name.ref.focus();
 Some other useful properties and methods you can call on the result of `useInput()`:
 
 - `isValid` will be true if all validation rules return true. Updates automatically using `onChange`.
-- `clear()` sets the value of the field to `""`.
+
+> Since v1.5.0 `clear` has been renamed to `reset`.
+- `reset()` sets the value of the field to `""`.
 - `setValue()` sets the value of the field to whatever you pass to it, if you ever need to set the value manually.
+- `dirty` indicates with a boolean if the field has changed since initial render.
 
 ### useNumberInput
 
