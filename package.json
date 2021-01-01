@@ -1,6 +1,6 @@
 {
   "name": "react-grapple",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A collection of useful hooks that I made.",
   "author": "Koen Brouwer",
   "keywords": [
@@ -30,22 +30,22 @@
   },
   "homepage": "https://github.com/KoenBrouwer/react-grapple#readme",
   "devDependencies": {
-    "@testing-library/react": "^10.4.9",
-    "@testing-library/react-hooks": "^3.4.1",
-    "@types/enzyme": "^3.10.5",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/react-hooks": "^3.7.0",
+    "@types/enzyme": "^3.10.8",
     "@types/enzyme-adapter-react-16": "^1.0.6",
-    "@types/jest": "^26.0.10",
-    "@types/react": "^16.9.48",
+    "@types/jest": "^26.0.19",
+    "@types/react": "^17.0.0",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.4",
-    "jest": "^26.4.2",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "jest": "^26.6.3",
     "mockdate": "^3.0.2",
-    "react-test-renderer": "^16.13.1",
-    "ts-jest": "^26.3.0",
-    "typescript": "^3.9.7"
+    "react-test-renderer": "^17.0.1",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.3"
   },
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   }
 }
