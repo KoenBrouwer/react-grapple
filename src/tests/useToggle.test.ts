@@ -35,10 +35,24 @@ test('Should toggle from false to true', () => {
 test('Should toggle from true to false explicitly', () => {
 	const {result} = renderHook(() => useToggle(true));
 
-	let [state, toggleState] = result.current;
+	let [state, toggleState, on, off] = result.current;
 
 	act(() => {
 		toggleState(false);
+	});
+
+	[state] = result.current;
+	expect(state).toBe(false);
+
+	act(() => {
+		toggleState(true);
+	});
+
+	[state] = result.current;
+	expect(state).toBe(true);
+
+	act(() => {
+		off();
 	});
 
 	[state] = result.current;
@@ -48,10 +62,24 @@ test('Should toggle from true to false explicitly', () => {
 test('Should toggle from false to true explicitly', () => {
 	const {result} = renderHook(() => useToggle(false));
 
-	let [state, toggleState] = result.current;
+	let [state, toggleState, on, off] = result.current;
 
 	act(() => {
 		toggleState(true);
+	});
+
+	[state] = result.current;
+	expect(state).toBe(true);
+
+	act(() => {
+		toggleState(false);
+	});
+
+	[state] = result.current;
+	expect(state).toBe(false);
+
+	act(() => {
+		on();
 	});
 
 	[state] = result.current;
