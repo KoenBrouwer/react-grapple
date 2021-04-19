@@ -12,11 +12,11 @@ export function useToggle(initialValue: boolean = false): UseToggle {
 		}
 	};
 
-	const turnOn = () => setState(true);
+	const on = () => setState(true);
 
-	const turnOff = () => setState(false);
+	const off = () => setState(false);
 
-	return [state, toggleState, turnOn, turnOff];
+	return [state, toggleState, on, off];
 }
 
 export default useToggle;
