@@ -6,7 +6,7 @@ export function useToggle(initialValue: boolean = false): UseToggle {
 	const [state, setState] = useState<boolean>(initialValue);
 	const toggleState = (value?: boolean) => {
 		if (value === undefined) {
-			setState(!state);
+			setState((v) => !v);
 		} else {
 			setState(value);
 		}
