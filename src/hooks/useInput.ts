@@ -32,8 +32,6 @@ export type UseInput<T = string> = {
     defaultValue: T,
     value: T,
     reset: () => void,
-    /** @deprecated Use reset() instead. */
-    clear: () => void,
     setValue: Dispatch<SetStateAction<T>>,
     onChange: OnChangeHandler,
     isValid: boolean,
@@ -120,10 +118,6 @@ export function useInput<T = string>(options?: T | UseInputOptions<T>): UseInput
     return useMemo(() => ({
         defaultValue,
         value,
-        clear: (...args) => {
-            console.warn("react-grapple", "UseInput.clear() is deprecated. Use reset() instead.")
-            reset(...args);
-        },
         reset,
         setValue,
         onChange,
