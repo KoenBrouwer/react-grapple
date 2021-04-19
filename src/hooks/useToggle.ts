@@ -13,7 +13,6 @@ export function useToggle(initialValue: boolean = false): UseToggle {
 	};
 
 	const on = () => setState(true);
-
 	const off = () => setState(false);
 
 	return [state, toggleState, on, off];

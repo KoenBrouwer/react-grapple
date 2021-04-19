@@ -9,8 +9,11 @@ Installation into your project is done with the [`npm install` command](https://
 
 # Changelog
 
+### 1.6.0
+- Added `on` and `off` helper functions to `useToggle` hook.
+
 ### 1.5.0
-- Added `turnOn` and `turnOff` helper functions to `useToggle` hook.
+- Removed `clear()`, please use `reset()` instead.
 
 ### 1.4.0
 - Added `useIsMobile` hook for checking the width of the window (using `window.innerWidth`)
