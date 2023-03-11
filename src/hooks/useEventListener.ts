@@ -1,7 +1,8 @@
-import {useEffect, useRef} from "react";
+import {EventHandler, ReactEventHandler, useEffect, useRef} from "react";
 
-const useEventListener = (eventName, handler, element = window) => {
-	const _handler = useRef<Function>();
+const useEventListener = <TEventName extends keyof WindowEventMap>(eventName: TEventName, handler: ReactEventHandler<WindowEventMap[TEventName]>, element?: Element) => {
+	const _handler = useRef<EventHandler<any>>();
+	const _element = useRef<Element>(element || document.body);
 
 	useEffect(() => {
 		_handler.current = handler;
@@ -12,7 +13,7 @@ const useEventListener = (eventName, handler, element = window) => {
 			return;
 		}
 
-		const eventListener = (event) => _handler.current?.(event);
+		const eventListener = (event: any) => _handler.current?.(event);
 		element.addEventListener(eventName, eventListener);
 
 		return () => {

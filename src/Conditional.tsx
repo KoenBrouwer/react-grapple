@@ -1,12 +1,16 @@
 import React from "react";
 
-interface IConditionalProps {
-	children: any,
+export type ConditionalProps = {
+	children: React.ReactNode,
 	show?: boolean
 }
 
-export const Conditional = ({children, show = true}: IConditionalProps) => {
-	return show ? <>{children}</> : null;
+export const Conditional: React.FC<ConditionalProps> = ({children, show = true}) => {
+	if (!show) {
+		return null;
+	}
+
+	return <>{children}</>;
 };
 
 export default Conditional;
