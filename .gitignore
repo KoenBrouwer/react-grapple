@@ -1,6 +1,4 @@
 node_modules
-/dist
-.idea
-/__*
-/coverage
-/demo
+dist
+.DS_Store
+coverage

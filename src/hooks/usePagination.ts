@@ -1,9 +1,9 @@
 import {useState} from "react";
 
-const usePagination = (nItems, pageSize = 15) => {
-	const [currentPage, setPage] = useState(1);
+const usePagination = (nItems: number, pageSize = 15) => {
+	const [currentPage, setPage] = useState<number>(1);
 
-	const isLastPage = (pageNumber) => {
+	const isLastPage = (pageNumber: number) => {
 		const nPages = Math.ceil(nItems / pageSize);
 		return pageNumber >= nPages;
 	};
@@ -12,8 +12,8 @@ const usePagination = (nItems, pageSize = 15) => {
 		currentPage,
 		hasNext: !isLastPage(currentPage),
 		hasPrevious: currentPage > 0,
-		goToNextPage: setPage(page => page + 1),
-		goToPreviousPage: setPage(page => page - 1)
+		goToNextPage: () => setPage(page => page + 1),
+		goToPreviousPage: () => setPage(page => page - 1)
 	}
 }
 

@@ -1,6 +1,7 @@
+/** @type {import("ts-jest").JestConfigWithTsJest} */
 module.exports = {
-	preset: 'ts-jest',
-	testEnvironment: 'jsdom',
+	preset: "ts-jest",
+	testEnvironment: "jsdom",
 	verbose: true,
 	collectCoverage: true,
 	collectCoverageFrom: [
@@ -8,5 +9,6 @@ module.exports = {
 		"!**/node_modules/**",
 		"!dist/**"
 	],
-	coverageReporters: ["html"]
-};
+	coverageReporters: ["html"],
+	coverageDirectory: "coverage",
+}

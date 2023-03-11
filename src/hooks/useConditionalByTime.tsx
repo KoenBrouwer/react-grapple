@@ -1,35 +1,38 @@
-import React, {useEffect, useMemo} from "react";
+import React, {PropsWithChildren, useEffect, useMemo, useRef} from "react";
 import Conditional from "../Conditional";
 import useToggle from "./useToggle";
 
-export type UseConditionalByTime = [React.FC, React.FC];
+export type UseConditionalByTime = [React.FC<PropsWithChildren>, React.FC<PropsWithChildren>];
 
-export function useConditionalByTime(splitTime: Date, realtime = false): UseConditionalByTime {
-	let _isDone = () => new Date() >= splitTime;
+export function useConditionalByTime(atTime: Date, realtime = false): UseConditionalByTime {
+	const _isDone = () => new Date() >= atTime;
 	const [isDone, toggleDone] = useToggle(_isDone());
+	const interval = useRef<NodeJS.Timeout>();
+
+	const checkDone = () => {
+		if (_isDone()) {
+			clearInterval(interval.current);
+			toggleDone(true);
+		}
+	};
 
 	useEffect(() => {
 		/* If realtime is true, we need to refresh the component and show the After */
-		if (realtime && !isDone) {
-			let interval;
-			let checkDone = () => {
-				if (_isDone()) {
-					clearInterval(interval);
-					toggleDone(true);
-				}
-			};
-			interval = setInterval(checkDone, 1000);
+		if (realtime) {
 			checkDone();
-			return () => clearInterval(interval);
+			interval.current = setInterval(checkDone, 1000);
+			return () => clearInterval(interval.current);
 		}
-	}, [splitTime, realtime]);
 
-	const Before: React.FC = useMemo(() => ({children}) => (
+		return undefined;
+	}, [atTime, realtime]);
+
+	const Before: React.FC<PropsWithChildren> = useMemo(() => ({children}) => (
 		<Conditional show={!isDone}>{children}</Conditional>
-	), [splitTime, isDone]);
-	const After: React.FC = useMemo(() => ({children}) => (
+	), [atTime, isDone]);
+	const After: React.FC<PropsWithChildren> = useMemo(() => ({children}) => (
 		<Conditional show={isDone}>{children}</Conditional>
-	), [splitTime, isDone]);
+	), [atTime, isDone]);
 
 	return [Before, After];
 }
